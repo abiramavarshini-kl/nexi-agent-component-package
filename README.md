@@ -39,7 +39,7 @@ more. You install them, import them, and pass in your own data.
 ## 1. Quick start
 
 ```bash
-npm install github:abiramavarshini-kl/nexi-agent-packages
+npm install github:abiramavarshini-kl/nexi-agent-component-package
 ```
 
 ```tsx
@@ -77,7 +77,7 @@ That's all. To see every component with sample data first, run the
 
 | From | Command | When |
 | --- | --- | --- |
-| **Git** | `npm install github:abiramavarshini-kl/nexi-agent-packages` (add `#main` or `#v0.1.0` to pin) | the normal way, until it's on npm. npm builds the package on install. |
+| **Git** | `npm install github:abiramavarshini-kl/nexi-agent-component-package` (add `#main` or `#v0.1.0` to pin) | the normal way, until it's on npm. npm builds the package on install. |
 | **npm** | `npm install nexi-agent` | once it's published |
 | **A local file** | in this repo: `npm run build && npm pack`, then in your app: `npm install ../path/nexi-agent-0.1.0.tgz` | testing unreleased changes in another app |
 
@@ -425,7 +425,7 @@ Use the `labels` prop on any component (see [②](#-ui-words-go-in-labels)).
 ### Get going
 
 ```bash
-git clone https://github.com/abiramavarshini-kl/nexi-agent-packages.git nexi-agent
+git clone https://github.com/abiramavarshini-kl/nexi-agent-component-package.git nexi-agent
 cd nexi-agent
 npm install            # installs and builds dist/
 npm run playground     # opens the gallery at http://localhost:5173
@@ -527,11 +527,11 @@ docker build --target test -t nexi-agent-test .         # build + smoke test onl
 
 ## 9. Releasing
 
-**Via Git** (what teammates install with `npm install github:abiramavarshini-kl/nexi-agent-packages`):
+**Via Git** (what teammates install with `npm install github:abiramavarshini-kl/nexi-agent-component-package`):
 
 ```bash
 npm version patch        # 0.1.0 → 0.1.1; use minor / major for bigger changes
-git push --follow-tags   # teammates pin with  github:abiramavarshini-kl/nexi-agent-packages#v0.1.1
+git push --follow-tags   # teammates pin with  github:abiramavarshini-kl/nexi-agent-component-package#v0.1.1
 ```
 
 **Via npm:**
