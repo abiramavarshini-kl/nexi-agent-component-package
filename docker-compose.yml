@@ -1,0 +1,18 @@
+services:
+  # the component gallery, built and served by nginx → http://localhost:8080
+  playground:
+    build:
+      context: .
+      target: web
+    ports:
+      - "8080:80"
+
+  # Vite dev server for the playground → http://localhost:5173
+  # (rebuild the image after changing the library: docker compose up --build dev)
+  dev:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "5173:5173"
+    profiles: ["dev"]
