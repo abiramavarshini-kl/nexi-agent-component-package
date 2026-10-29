@@ -555,6 +555,7 @@ A version number can't be published twice. Bump it with `npm version` each time.
 | A component renders empty | That's by design: pass your content props, or spread its fixture from `nexi-agent/demo`. |
 | `Invalid hook call` / two copies of React | Make sure your app has a single React. With a linked local package, add `resolve: { dedupe: ["react", "react-dom"] }` to your Vite config. |
 | Your app still shows old behaviour after reinstalling a `.tgz` | The version didn't change, so npm reused its cache. Delete `node_modules/nexi-agent` and install again. |
+| `npm warn allow-scripts … nexi-agent (prepare: npm run build)` when installing from Git | Harmless: npm has already built the package while fetching it from GitHub. You don't need to approve the script. |
 | `useToast must be used inside <ToastProvider>` | Wrap your app (or that part of it) in `<ToastProvider>`. |
 | Fonts look different from the screenshots | Load Inter and JetBrains Mono (see [Fonts](#fonts-optional)). |
 | `npm run build` fails on Windows | Use Node 20+ and run from the repo root. The build scripts are written to work on Windows. |
