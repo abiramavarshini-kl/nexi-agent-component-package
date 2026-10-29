@@ -25,6 +25,10 @@ const atomProps: Record<string, Record<string, unknown>> = {
   TextRow: { label: "Label", value: "Value" },
   Shimmer: { children: "Working" },
   GlideMenu: { children: createElement("button", { "data-menu-row": true }, "Row") },
+  Avatar: { name: "Nexus", status: "online" },
+  Tooltip: { content: "Hint", children: createElement("button", null, "Hover me") },
+  Message: { role: "assistant", name: "Agent", content: "Hello" },
+  ToastProvider: { children: createElement("span", null, "app") },
 };
 
 /* component name → demo fixture export (camelCase + "Demo") */
@@ -34,7 +38,9 @@ const demoFor = (name: string) =>
     | undefined;
 
 /* exports that aren't components */
-const skip = new Set(["cn", "badgeVariants", "buttonVariants", "toStreamingTokens", "RECORD_TAG_PALETTE"]);
+const skip = new Set(["cn", "badgeVariants", "buttonVariants", "toStreamingTokens", "RECORD_TAG_PALETTE", "useToast"]);
+/* portal components render nothing on the server; just check they don't throw */
+const clientOnly = new Set(["Dialog"]);
 /* sub-components rendered through their parent's demo */
 const viaParent = new Set(["InsightCompareCard", "InsightAnomalyCard", "InsightAllocationCard", "InsightEntity", "InsightMono"]);
 
@@ -71,8 +77,11 @@ for (const [name, value] of Object.entries(Nexi)) {
     console.log(`  ✗ ${name} (no demo fixture)`);
     continue;
   }
-  check(`${name} (demo)`, () => renderToString(createElement(component, demo)), 40);
+  check(`${name} (demo)`, () => renderToString(createElement(component, demo)), clientOnly.has(name) ? 0 : 40);
 }
+
+// the error flavour of EmptyState
+check("EmptyState (error)", () => renderToString(createElement(Nexi.EmptyState, Demo.errorStateDemo)), 40);
 
 // every ThinkingState variant has its own fixture
 for (const [variant, props] of Object.entries(Demo.thinkingStateDemos)) {

@@ -187,6 +187,8 @@ your backend. For example:
 | `RecordsTable` | `onSelectionChange(ids)`, `onCalculate(column)` |
 | `SidebarNav` | `onNewChat`, `onPick(id)`, `onNavigate(key)`, `onWorkspaceMenu(key)`, `onFooterClick` |
 | `Flowchart` | `onConditionChange(step, condition, field, value)`, `onSelect(step)` |
+| `Dialog` | `onConfirm()`: return `false` to keep it open; it may be async |
+| `Markdown` | `onLinkClick(href)`, `onCopyCode(code)` |
 
 ### Styling setup: pick one
 
@@ -202,9 +204,9 @@ so is every component's props type (`ApprovalCardProps`, `PromptBarProps`…).
 
 ### Atoms
 
-`Badge` · `Button` · `Chip` · `EntityChip` / `Monogram` · `ProgressRing` ·
+`Avatar` · `Badge` · `Button` · `Chip` · `EntityChip` / `Monogram` · `ProgressRing` ·
 `SegmentedControl` · `Shimmer` · `StatusPill` · `StreamText` · `Switch` ·
-`TextRow` · `ValuePill` · `NexiProvider`
+`TextRow` · `Tooltip` · `ValuePill` · `NexiProvider`
 
 ```tsx
 <Badge tone="green" dot>Completed</Badge>
@@ -212,6 +214,38 @@ so is every component's props type (`ApprovalCardProps`, `PromptBarProps`…).
 <StatusPill tone="orange">Running</StatusPill>
 <ProgressRing progress={0.6} tone="accent" />
 <SegmentedControl options={["Day", "Week"]} value={range} onChange={setRange} />
+<Avatar name="Maya Chen" src={photoUrl} status="online" size="md" />
+<Tooltip content="Copy the answer"><button>…</button></Tooltip>
+```
+
+### App building blocks
+
+These connect the agent components into a full screen. They weren't in Beautiful UI;
+they're built from its tokens and atoms.
+
+| Component | What it does | Main props |
+| --- | --- | --- |
+| `MessageThread` / `Message` | the scrolling conversation; agent turns can hold any component, user turns are bubbles; follows new content unless the reader scrolls up | `messages` (`role`, `content`, `name`, `avatar`, `time`), `empty`, `footer`, `autoScroll` |
+| `Markdown` | renders an agent's markdown answer safely (no raw HTML): headings, lists, tables, quotes, links, inline code; fenced code uses `CodeBlock`; partial text works for streaming | `content`, `onLinkClick`, `onCopyCode` |
+| `EmptyState` | nothing-here-yet and error panels | `title`, `description`, `tone` (neutral · error · warning · success), `icon`, `actions` |
+| `Dialog` | confirm / small-form modal: Esc and backdrop close it, focus moves inside, scroll is locked | `open`, `onOpenChange`, `title`, `description`, `onConfirm`, `destructive`, `children` |
+| `ToastProvider` + `useToast()` | short notifications: wrap the app once, then `toast({ title, tone, action })` | `position`, `duration`, `max` |
+| `UsageMeter` | tokens / credits used against a limit; turns orange, then red, near the limit | `label`, `used`, `limit`, `segments`, `format`, `hint` |
+
+```tsx
+const { toast } = useToast();
+
+<MessageThread
+  messages={[
+    { id: "1", role: "user", content: question },
+    { id: "2", role: "assistant", name: "Scout", content: <Markdown content={answerSoFar} /> },
+  ]}
+  footer={running && <LoadingState label="Working" />}
+  empty={<EmptyState title="Ask anything" description="Your agent's answers show up here." />}
+/>
+
+<Dialog open={open} onOpenChange={setOpen} title="Delete this run?" destructive onConfirm={deleteRun} />
+<Button onClick={() => toast({ title: "Copied", tone: "success" })}>Copy</Button>
 ```
 
 ### Agent components
@@ -365,7 +399,8 @@ For releases after the first one: `npm version patch` (or `minor` / `major`), th
   `@central-icons-react` set, which needs a paid licence key to install.
 - Site-only global CSS was removed. Body typography lives on the `.nexi` scope, so
   it can't restyle your app.
-- Added `Badge`, `NexiProvider` and the playground.
+- Added `Badge`, `NexiProvider`, `Avatar`, `Tooltip`, `MessageThread`, `Markdown`,
+  `EmptyState`, `Dialog`, `ToastProvider` / `useToast`, `UsageMeter` and the playground.
 
 ## License
 

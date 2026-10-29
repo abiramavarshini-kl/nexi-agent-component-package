@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState, type ReactNode } from "react";
+import { cn } from "../lib/utils";
 
 /* ─────────────────────────────────────────────────────────
  * CODE BLOCK
@@ -137,7 +138,7 @@ export default function CodeBlock({
   const removed = diff.filter((r) => r.type === "del").length;
 
   return (
-    <div className={`w-full max-w-105 overflow-hidden rounded-card bg-surface shadow-card ${className}`}>
+    <div className={cn("w-full max-w-105 overflow-hidden rounded-card bg-surface shadow-card", className)}>
       {/* header — file · (diff stat | copy) */}
       <div className="flex h-11 items-center gap-2 border-b border-line px-4 text-[12.5px]">
         <span className="inline-flex min-w-0 items-center gap-[7px]">

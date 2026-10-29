@@ -1,20 +1,25 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   AgentScreen,
   ApprovalCard,
+  Avatar,
   Badge,
   Button,
   ChatComposer,
   Chip,
   CodeBlock,
   ContextCards,
+  Dialog,
   DiffTable,
+  EmptyState,
   EntityChip,
   FilterTable,
   FineTuneCard,
   Flowchart,
   InsightCards,
   LoadingState,
+  Markdown,
+  MessageThread,
   NexiProvider,
   ProgressRing,
   PromptBar,
@@ -29,7 +34,11 @@ import {
   Switch,
   TaskRows,
   ThinkingState,
+  ToastProvider,
   ToolChips,
+  Tooltip,
+  UsageMeter,
+  useToast,
   ValuePill,
 } from "nexi-agent";
 import {
@@ -38,12 +47,17 @@ import {
   chatComposerDemo,
   codeBlockDemo,
   contextCardsDemo,
+  dialogDemo,
   diffTableDemo,
+  emptyStateDemo,
+  errorStateDemo,
   filterTableDemo,
   fineTuneCardDemo,
   flowchartDemo,
   insightCardsDemo,
   loadingStateDemo,
+  markdownDemo,
+  messageThreadDemo,
   promptBarDemo,
   recommendationCardDemo,
   recordsTableDemo,
@@ -54,6 +68,7 @@ import {
   taskRowsDemo,
   thinkingStateDemos,
   toolChipsDemo,
+  usageMeterDemo,
 } from "nexi-agent/demo";
 
 /* Every component rendered with its sample data from "nexi-agent/demo".
@@ -70,8 +85,43 @@ function Card({ title, wide, children }: { title: string; wide?: boolean; childr
 
 const thinkingVariants = ["Steps", "Reasoning", "Search", "Coding"] as const;
 
+/* ?dialog / ?toast open those on load — handy for screenshots */
+const params = new URLSearchParams(typeof location === "undefined" ? "" : location.search);
+
+function ToastButtons() {
+  const { toast } = useToast();
+  const shown = useRef(false);
+  useEffect(() => {
+    if (!params.has("toast") || shown.current) return;
+    shown.current = true;
+    toast({ title: "Run finished", description: "3 suppliers emailed.", tone: "success", duration: 0 });
+  }, [toast]);
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+      <Button size="sm" onClick={() => toast({ title: "Run finished", description: "3 suppliers emailed.", tone: "success" })}>
+        Success toast
+      </Button>
+      <Button size="sm" onClick={() => toast({ title: "Export failed", description: "The POS API timed out.", tone: "error", action: { label: "Retry", onClick: () => {} } })}>
+        Error toast
+      </Button>
+      <Button size="sm" onClick={() => toast({ title: "Copied to clipboard", duration: 1500 })}>
+        Short toast
+      </Button>
+    </div>
+  );
+}
+
 export default function App() {
+  return (
+    <ToastProvider>
+      <Gallery />
+    </ToastProvider>
+  );
+}
+
+function Gallery() {
   const [dark, setDark] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(params.has("dialog"));
   const [thinking, setThinking] = useState<(typeof thinkingVariants)[number]>("Steps");
   const [code, setCode] = useState<"Code" | "Diff">("Code");
   const [switchOn, setSwitchOn] = useState(true);
@@ -99,6 +149,11 @@ export default function App() {
             <Button variant="accent" size="sm">Accent</Button>
             <Button variant="secondary" size="sm">Secondary</Button>
             <Switch checked={switchOn} onChange={setSwitchOn} label="Toggle" />
+            <Avatar name="Scout" status="online" />
+            <Avatar name="Maya Chen" size="md" color="#3d9aff" />
+            <Tooltip content="Tooltips work on hover and focus">
+              <Button size="sm" variant="ghost">Hover me</Button>
+            </Tooltip>
           </div>
         </Card>
 
@@ -131,6 +186,37 @@ export default function App() {
               ]}
               onAccept={(option) => console.log("accepted", option.key)}
             />
+          </div>
+        </Card>
+
+        <Card title="MessageThread + Markdown">
+          <MessageThread {...messageThreadDemo} className="max-h-[420px]" />
+        </Card>
+
+        <Card title="Markdown">
+          <Markdown {...markdownDemo} />
+        </Card>
+
+        <Card title="EmptyState">
+          <EmptyState {...emptyStateDemo} />
+        </Card>
+
+        <Card title="EmptyState — error">
+          <EmptyState {...errorStateDemo} />
+        </Card>
+
+        <Card title="Dialog + Toast">
+          <div style={{ display: "grid", gap: 12, justifyItems: "center" }}>
+            <Button size="sm" variant="accent" onClick={() => setDialogOpen(true)}>Open dialog</Button>
+            <ToastButtons />
+            <Dialog {...dialogDemo} open={dialogOpen} onOpenChange={setDialogOpen} />
+          </div>
+        </Card>
+
+        <Card title="UsageMeter">
+          <div style={{ width: "100%", display: "grid", gap: 20, justifyItems: "center" }}>
+            <UsageMeter {...usageMeterDemo} />
+            <UsageMeter label="Credits" used={940} limit={1000} hint="94% used" />
           </div>
         </Card>
 
