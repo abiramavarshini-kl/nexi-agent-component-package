@@ -4,6 +4,14 @@
   "description": "React components for AI-agent interfaces — streaming answers, thinking traces, approvals, tool calls, tables and more. Every component is content-free: pass your own data and text through props. Built on Beautiful UI.",
   "license": "MIT",
   "author": "Kaaylabs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abiramavarshini-kl/nexi-agent-packages.git"
+  },
+  "homepage": "https://github.com/abiramavarshini-kl/nexi-agent-packages#readme",
+  "bugs": {
+    "url": "https://github.com/abiramavarshini-kl/nexi-agent-packages/issues"
+  },
   "keywords": [
     "react",
     "ai",
