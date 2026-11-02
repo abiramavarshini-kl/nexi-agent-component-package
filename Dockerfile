@@ -31,4 +31,5 @@ RUN npm install && npm run build
 # ── 6. serve the playground with nginx (default target) ──────────────────
 FROM nginx:1.27-alpine AS web
 COPY --from=playground /app/playground/dist /usr/share/nginx/html
+COPY playground/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80

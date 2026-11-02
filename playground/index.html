@@ -3,7 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>nexi-agent playground</title>
+    <title>nexi-agent — components for AI-agent interfaces</title>
+    <meta
+      name="description"
+      content="React components for AI-agent interfaces: streaming answers, thinking traces, approvals, tool calls, tables and more. Live previews, copyable code and full props."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%233d6bff'/%3E%3C/svg%3E"
+    />
+    <!-- set the theme before first paint so dark-mode visitors don't see a white flash -->
+    <script>
+      try {
+        var t = localStorage.getItem("nexi-docs-theme");
+        if (t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.classList.add("dark");
+      } catch (e) {}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

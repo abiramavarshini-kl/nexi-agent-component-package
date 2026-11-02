@@ -428,7 +428,7 @@ Use the `labels` prop on any component (see [②](#-ui-words-go-in-labels)).
 git clone https://github.com/abiramavarshini-kl/nexi-agent-component-package.git nexi-agent
 cd nexi-agent
 npm install            # installs and builds dist/
-npm run playground     # opens the gallery at http://localhost:5173
+npm run playground     # opens the docs site at http://localhost:5173
 ```
 
 ### Scripts
@@ -441,11 +441,35 @@ npm run playground     # opens the gallery at http://localhost:5173
 | `npm run playground` | builds, then starts the playground dev server |
 | `npm pack` | creates the `.tgz` file to test-install in another app |
 
-### The playground
+### The playground (docs site)
 
-[`playground/`](playground) is a Vite app that shows every component with its demo
-data, a dark-mode toggle and a customisation example. It uses the built `dist/`, so
-after editing `src/`, run `npm run build` and the playground updates.
+[`playground/`](playground) is the public docs site: a Vite app with a page per
+component (live preview, copyable code, sample data and a props table), an
+introduction, an all-on-one-page gallery at `/all`, and dark mode. It uses the
+built `dist/`, so after editing `src/`, run `npm run build` and the site updates.
+
+- **Examples:** `playground/src/examples/<Name>.tsx`. Each file is rendered as the
+  preview *and* shown as the code, so the two can't disagree.
+- **Page list and descriptions:** `playground/src/registry.ts`.
+- **Props tables:** generated from the TypeScript source by
+  `playground/scripts/make-props.mjs` on every `dev`/`build`. Write a `/** comment */`
+  above a prop and it shows up as the description.
+
+### Deploying the docs site (Vercel)
+
+[`vercel.json`](vercel.json) holds the whole setup, so there's nothing to configure
+in the dashboard:
+
+1. On [vercel.com](https://vercel.com), **Add New → Project** and import this GitHub
+   repository.
+2. Leave **Root Directory** as the repo root and the framework preset as **Other**
+   (`vercel.json` sets the install, build and output commands). Click **Deploy**.
+3. Every push to `main` redeploys the site. Every other branch and pull request gets
+   its own preview URL.
+
+To use your own domain, go to **Project → Settings → Domains**.
+
+To check a deploy locally first: `npm run build && npm --prefix playground run build && npm --prefix playground run preview`.
 
 ### Day-to-day workflow
 
@@ -474,7 +498,8 @@ scripts/
   build-css.mjs     builds dist/styles.css and dist/tailwind.css
   make-foundation.py  regenerates foundation.css from upstream Beautiful UI
 test/smoke.test.tsx render test for every component
-playground/         Vite gallery app (not published)
+playground/         the docs site, deployed to Vercel (not published to npm)
+vercel.json         Vercel build settings for the docs site
 ```
 
 ### Adding a component
@@ -486,7 +511,8 @@ playground/         Vite gallery app (not published)
    `className`, and you export a `MyThingProps` type.
 3. Add `src/demo/MyThing.ts` exporting `myThingDemo`, and re-export it from
    `src/demo/index.ts`.
-4. Add it to `playground/src/App.tsx`.
+4. Add `playground/src/examples/MyThing.tsx` (a default-exported example) and a row
+   in `playground/src/registry.ts`. It gets its own docs page.
 5. Run `npm test`. The export list regenerates automatically, and the test fails
    if the component has no demo fixture or crashes.
 
