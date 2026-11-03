@@ -4,6 +4,8 @@
 answers, reasoning traces, tool calls, approvals, task progress, data tables and
 more. You install them, import them, and pass in your own data.
 
+**[Browse every component live →](https://nexi-agent-component-package.vercel.app)** (previews, copyable code and props)
+
 ```tsx
 <ThinkingState done="Thought for 3 seconds" rows={[{ primary: "Reading the ticket" }]} />
 <StreamingText content="The deploy failed because the API key expired." />
@@ -61,8 +63,8 @@ import { StreamingText } from "nexi-agent";
 <StreamingText content="Hello! I'm your agent." />;
 ```
 
-That's all. To see every component with sample data first, run the
-[playground](#the-playground).
+That's all. To see every component with sample data first, open the
+[docs site](https://nexi-agent-component-package.vercel.app).
 
 ---
 
