@@ -1,6 +1,6 @@
 {
   "name": "nexi-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React components for AI-agent interfaces — streaming answers, thinking traces, approvals, tool calls, tables and more. Every component is content-free: pass your own data and text through props. Built on Beautiful UI.",
   "license": "MIT",
   "author": "Kaaylabs",
