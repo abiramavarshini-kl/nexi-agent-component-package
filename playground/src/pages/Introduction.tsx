@@ -4,7 +4,7 @@ import { docs, groups, slugOf } from "../registry";
 import { Link } from "../router";
 import { REPO_URL } from "../site";
 
-const install = "npm install github:abiramavarshini-kl/nexi-agent-component-package";
+const install = "npm install nexi-agent";
 
 const setup = `// main.tsx (or app/layout.tsx in Next.js)
 import "nexi-agent/styles.css";

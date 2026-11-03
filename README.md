@@ -39,7 +39,7 @@ more. You install them, import them, and pass in your own data.
 ## 1. Quick start
 
 ```bash
-npm install github:abiramavarshini-kl/nexi-agent-component-package
+npm install nexi-agent
 ```
 
 ```tsx
@@ -77,8 +77,8 @@ That's all. To see every component with sample data first, run the
 
 | From | Command | When |
 | --- | --- | --- |
-| **Git** | `npm install github:abiramavarshini-kl/nexi-agent-component-package` (add `#main` or `#v0.1.0` to pin) | the normal way, until it's on npm. npm builds the package on install. |
-| **npm** | `npm install nexi-agent` | once it's published |
+| **npm** | `npm install nexi-agent` | the normal way |
+| **Git** | `npm install github:abiramavarshini-kl/nexi-agent-component-package` (add `#main` or `#v0.1.0` to pin) | an unreleased commit or branch. npm builds the package on install. |
 | **A local file** | in this repo: `npm run build && npm pack`, then in your app: `npm install ../path/nexi-agent-0.1.0.tgz` | testing unreleased changes in another app |
 
 ### Styles: pick one
@@ -553,23 +553,19 @@ docker build --target test -t nexi-agent-test .         # build + smoke test onl
 
 ## 9. Releasing
 
-**Via Git** (what teammates install with `npm install github:abiramavarshini-kl/nexi-agent-component-package`):
+The package is on npm as [`nexi-agent`](https://www.npmjs.com/package/nexi-agent).
+To release a new version:
 
 ```bash
 npm version patch        # 0.1.0 → 0.1.1; use minor / major for bigger changes
-git push --follow-tags   # teammates pin with  github:abiramavarshini-kl/nexi-agent-component-package#v0.1.1
+git push --follow-tags   # pushes the commit and the v0.1.1 tag
+npm login                # once per machine
+npm publish              # runs typecheck + build, then asks you to confirm with 2FA
 ```
 
-**Via npm:**
-
-```bash
-npm login
-npm publish                       # runs typecheck + build first
-# scoped to your organisation: set "name": "@kaaylabs/nexi-agent", then
-npm publish --access public       # or --access restricted (paid npm plan)
-```
-
-A version number can't be published twice. Bump it with `npm version` each time.
+A version number can't be published twice, so bump it with `npm version` each time.
+Publishing needs 2FA on the npm account. The docs site redeploys from `main` on
+its own, so there's nothing to do there.
 
 ---
 
