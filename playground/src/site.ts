@@ -1,1 +1,1 @@
-export const REPO_URL = "https://github.com/abiramavarshini-kl/nexi-agent-component-package";
+export const REPO_URL = "https://github.com/kaaylabs-v2/nexi-components";

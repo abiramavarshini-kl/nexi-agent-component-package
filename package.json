@@ -6,11 +6,11 @@
   "author": "Kaaylabs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abiramavarshini-kl/nexi-agent-component-package.git"
+    "url": "git+https://github.com/kaaylabs-v2/nexi-components.git"
   },
   "homepage": "https://nexi-agent-component-package.vercel.app",
   "bugs": {
-    "url": "https://github.com/abiramavarshini-kl/nexi-agent-component-package/issues"
+    "url": "https://github.com/kaaylabs-v2/nexi-components/issues"
   },
   "keywords": [
     "react",

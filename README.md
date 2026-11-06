@@ -80,7 +80,7 @@ That's all. To see every component with sample data first, open the
 | From | Command | When |
 | --- | --- | --- |
 | **npm** | `npm install nexi-agent` | the normal way |
-| **Git** | `npm install github:abiramavarshini-kl/nexi-agent-component-package` (add `#main` or `#v0.1.0` to pin) | an unreleased commit or branch. npm builds the package on install. |
+| **Git** | `npm install github:kaaylabs-v2/nexi-components` (add `#main` or `#v0.1.0` to pin) | an unreleased commit or branch. npm builds the package on install. |
 | **A local file** | in this repo: `npm run build && npm pack`, then in your app: `npm install ../path/nexi-agent-0.1.0.tgz` | testing unreleased changes in another app |
 
 ### Styles: pick one
@@ -427,7 +427,7 @@ Use the `labels` prop on any component (see [②](#-ui-words-go-in-labels)).
 ### Get going
 
 ```bash
-git clone https://github.com/abiramavarshini-kl/nexi-agent-component-package.git nexi-agent
+git clone https://github.com/kaaylabs-v2/nexi-components.git nexi-agent
 cd nexi-agent
 npm install            # installs and builds dist/
 npm run playground     # opens the docs site at http://localhost:5173
